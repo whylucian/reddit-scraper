@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Clear Path From Stick Figures to Real Drawing</title>
+    <meta name="description" content="Stop watching random YouTube tutorials. Follow one clear, structured path from complete beginner to confident artist.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --cream: #fffaf5;
+            --cream-dark: #fef5ed;
+            --coral: #f97066;
+            --coral-dark: #e04d42;
+            --peach: #fed7aa;
+            --peach-light: #fff7ed;
+            --orange-50: #fff7ed;
+            --orange-100: #ffedd5;
+            --orange-500: #f97316;
+            --orange-600: #ea580c;
+            --warm-gray-50: #fafaf9;
+            --warm-gray-100: #f5f5f4;
+            --warm-gray-200: #e7e5e4;
+            --warm-gray-400: #a8a29e;
+            --warm-gray-500: #78716c;
+            --warm-gray-600: #57534e;
+            --warm-gray-700: #44403c;
+            --warm-gray-800: #292524;
+            --warm-gray-900: #1c1917;
+            --white: #ffffff;
+            --green-500: #22c55e;
+            --green-100: #dcfce7;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--warm-gray-800);
+            line-height: 1.6;
+            background: var(--cream);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── NAV ── */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--warm-gray-200);
+            background: var(--cream);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--coral);
+        }
+        .nav-cta {
+            background: var(--coral);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 24px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .nav-cta:hover { background: var(--coral-dark); }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--warm-gray-900);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .hero .subhead {
+            font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+            color: var(--warm-gray-600);
+            max-width: 580px;
+            margin: 0 auto 48px;
+        }
+
+        /* ── SKILL TREE ── */
+        .skill-tree-section {
+            padding: 60px 0 80px;
+        }
+        .skill-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .skill-row {
+            display: flex;
+            gap: 24px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .skill-node {
+            background: var(--white);
+            border: 2px solid var(--warm-gray-200);
+            border-radius: 16px;
+            padding: 16px 24px;
+            text-align: center;
+            min-width: 140px;
+            transition: transform 0.2s, border-color 0.2s;
+        }
+        .skill-node:hover {
+            transform: translateY(-2px);
+            border-color: var(--coral);
+        }
+        .skill-node .node-label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--warm-gray-800);
+        }
+        .skill-node .node-sub {
+            font-size: 0.78rem;
+            color: var(--warm-gray-500);
+            margin-top: 4px;
+        }
+        .skill-node.foundation {
+            border-color: var(--coral);
+            background: var(--peach-light);
+        }
+        .skill-node.intermediate {
+            border-color: var(--orange-500);
+            background: var(--orange-50);
+        }
+        .skill-node.advanced {
+            border-color: var(--green-500);
+            background: var(--green-100);
+        }
+        .tree-connector {
+            width: 2px;
+            height: 32px;
+            background: var(--warm-gray-200);
+            margin: 0 auto;
+        }
+        .tree-branch {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+        }
+        .tree-branch-line {
+            height: 2px;
+            width: 60px;
+            background: var(--warm-gray-200);
+        }
+        .tree-branch-down {
+            width: 2px;
+            height: 20px;
+            background: var(--warm-gray-200);
+        }
+
+        .level-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--warm-gray-400);
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .skill-tier {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* ── VS ALTERNATIVES ── */
+        .alternatives {
+            padding: 80px 0;
+            background: var(--white);
+        }
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--coral);
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--warm-gray-900);
+            margin-bottom: 48px;
+        }
+        .compare-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .compare-card {
+            border-radius: 16px;
+            padding: 28px;
+            border: 2px solid var(--warm-gray-200);
+            background: var(--warm-gray-50);
+        }
+        .compare-card.highlight {
+            border-color: var(--coral);
+            background: var(--peach-light);
+        }
+        .compare-card h3 {
+            font-size: 1.05rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--warm-gray-900);
+        }
+        .compare-card ul {
+            list-style: none;
+            font-size: 0.9rem;
+            color: var(--warm-gray-600);
+        }
+        .compare-card ul li {
+            padding: 4px 0;
+        }
+        .compare-card ul li::before {
+            content: "×  ";
+            color: var(--coral-dark);
+            font-weight: 700;
+        }
+        .compare-card.highlight ul li::before {
+            content: "✓  ";
+            color: var(--green-500);
+        }
+
+        /* ── SOCIAL PROOF ── */
+        .social-proof {
+            padding: 80px 0;
+            background: var(--cream-dark);
+        }
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .quote-card {
+            background: var(--white);
+            border-radius: 16px;
+            padding: 28px;
+            border: 1px solid var(--warm-gray-200);
+            position: relative;
+        }
+        .quote-card::before {
+            content: "\201C";
+            font-size: 3rem;
+            color: var(--coral);
+            line-height: 1;
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            opacity: 0.3;
+        }
+        .quote-card p {
+            font-size: 0.95rem;
+            color: var(--warm-gray-700);
+            font-style: italic;
+            padding-top: 16px;
+        }
+        .quote-card .attribution {
+            margin-top: 12px;
+            font-size: 0.82rem;
+            color: var(--warm-gray-400);
+            font-style: normal;
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+            background: var(--cream);
+        }
+        .cta-section h2 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--warm-gray-900);
+            margin-bottom: 12px;
+        }
+        .cta-section .subtext {
+            color: var(--warm-gray-600);
+            margin-bottom: 32px;
+            font-size: 1.05rem;
+        }
+        .signup-form {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
+            align-items: stretch;
+        }
+        .signup-form .email-row {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .signup-form input[type="email"] {
+            flex: 1;
+            min-width: 240px;
+            padding: 14px 18px;
+            border: 2px solid var(--warm-gray-200);
+            border-radius: 24px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+            background: var(--white);
+        }
+        .signup-form input[type="email"]:focus {
+            border-color: var(--coral);
+        }
+        .signup-form button {
+            padding: 14px 28px;
+            background: var(--coral);
+            color: var(--white);
+            border: none;
+            border-radius: 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .signup-form button:hover { background: var(--coral-dark); }
+        .survey-field {
+            margin-top: 8px;
+        }
+        .survey-field label {
+            display: block;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--warm-gray-700);
+            margin-bottom: 8px;
+        }
+        .survey-field textarea {
+            width: 100%;
+            padding: 14px 18px;
+            border: 2px solid var(--warm-gray-200);
+            border-radius: 16px;
+            font-size: 0.95rem;
+            font-family: inherit;
+            outline: none;
+            resize: vertical;
+            min-height: 80px;
+            transition: border-color 0.2s;
+            background: var(--white);
+        }
+        .survey-field textarea:focus {
+            border-color: var(--coral);
+        }
+        .privacy-note {
+            margin-top: 12px;
+            font-size: 0.82rem;
+            color: var(--warm-gray-400);
+            text-align: center;
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 32px 0;
+            border-top: 1px solid var(--warm-gray-200);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--warm-gray-400);
+            background: var(--cream);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .hero { padding: 48px 0 40px; }
+            .skill-tree-section, .alternatives, .social-proof, .cta-section { padding: 56px 0; }
+            .compare-grid, .quotes-grid { grid-template-columns: 1fr; }
+            .skill-row { flex-direction: column; align-items: center; gap: 12px; }
+            .tree-branch-line { width: 0; height: 0; }
+            .signup-form .email-row { flex-direction: column; }
+            .signup-form input[type="email"] { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+    <div class="container">
+        <div class="logo">DrawPath</div>
+        <a href="#signup" class="nav-cta">Get Started</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <h1>Stop Watching Random YouTube Tutorials</h1>
+        <p class="subhead">One clear path. From stick figures to real drawing. No more jumping between channels, books, and courses wondering if you're learning the right things in the right order.</p>
+    </div>
+</section>
+
+<!-- Skill Tree -->
+<section class="skill-tree-section">
+    <div class="container">
+        <p class="section-label" style="text-align:center;">The Skill Tree</p>
+        <h2 class="section-title" style="text-align:center;">One path. Every skill in order.</h2>
+
+        <div class="skill-tree">
+            <!-- Foundation -->
+            <div class="skill-tier">
+                <div class="level-label">Foundation</div>
+                <div class="skill-row">
+                    <div class="skill-node foundation">
+                        <div class="node-label">Lines &amp; Shapes</div>
+                        <div class="node-sub">Week 1-2</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tree-connector"></div>
+
+            <div class="skill-tier">
+                <div class="skill-row">
+                    <div class="skill-node foundation">
+                        <div class="node-label">Perspective</div>
+                        <div class="node-sub">Week 3-4</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tree-connector"></div>
+
+            <!-- Intermediate -->
+            <div class="skill-tier">
+                <div class="level-label">Intermediate</div>
+                <div class="skill-row">
+                    <div class="skill-node intermediate">
+                        <div class="node-label">Gesture</div>
+                        <div class="node-sub">Week 5-6</div>
+                    </div>
+                    <div class="skill-node intermediate">
+                        <div class="node-label">Proportions</div>
+                        <div class="node-sub">Week 5-6</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tree-connector"></div>
+
+            <div class="skill-tier">
+                <div class="skill-row">
+                    <div class="skill-node intermediate">
+                        <div class="node-label">Anatomy</div>
+                        <div class="node-sub">Week 7-10</div>
+                    </div>
+                    <div class="skill-node intermediate">
+                        <div class="node-label">Shading</div>
+                        <div class="node-sub">Week 7-10</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tree-connector"></div>
+
+            <!-- Advanced -->
+            <div class="skill-tier">
+                <div class="level-label">Advanced</div>
+                <div class="skill-row">
+                    <div class="skill-node advanced">
+                        <div class="node-label">Color</div>
+                        <div class="node-sub">Week 11-12</div>
+                    </div>
+                    <div class="skill-node advanced">
+                        <div class="node-label">Composition</div>
+                        <div class="node-sub">Week 11-12</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="tree-connector"></div>
+
+            <div class="skill-tier">
+                <div class="skill-row">
+                    <div class="skill-node advanced" style="border-color: var(--green-500); background: var(--green-100);">
+                        <div class="node-label">Your Style</div>
+                        <div class="node-sub">Ongoing</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- vs. The Alternatives -->
+<section class="alternatives">
+    <div class="container">
+        <p class="section-label">Why This Is Different</p>
+        <h2 class="section-title">You've tried the alternatives</h2>
+        <div class="compare-grid">
+            <div class="compare-card">
+                <h3>YouTube</h3>
+                <ul>
+                    <li>Overwhelming amount of content</li>
+                    <li>No clear progression</li>
+                    <li>No feedback on your work</li>
+                    <li>Easy to stay in "tutorial hell"</li>
+                </ul>
+            </div>
+            <div class="compare-card">
+                <h3>Drawabox</h3>
+                <ul>
+                    <li>Narrow focus on construction</li>
+                    <li>Polarizing tone</li>
+                    <li>Doesn't cover color, shading, style</li>
+                    <li>Painful grind for many</li>
+                </ul>
+            </div>
+            <div class="compare-card">
+                <h3>Art Books</h3>
+                <ul>
+                    <li>Non-interactive</li>
+                    <li>No feedback loop</li>
+                    <li>Hard to know your order</li>
+                    <li>Easy to read without practicing</li>
+                </ul>
+            </div>
+            <div class="compare-card highlight">
+                <h3>DrawPath</h3>
+                <ul>
+                    <li>One clear structured path</li>
+                    <li>Covers fundamentals to style</li>
+                    <li>Feedback on your drawings</li>
+                    <li>Friendly, complete, no grind</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Social Proof -->
+<section class="social-proof">
+    <div class="container">
+        <p class="section-label" style="text-align:center;">Real Artists, Real Words</p>
+        <h2 class="section-title" style="text-align:center;">This is why we're building this</h2>
+        <div class="quotes-grid">
+            <div class="quote-card">
+                <p>"I don't know where to start or how. I can barely draw a stickman correctly. If I use YouTube where do I start? What do I search for, it's so overwhelming."</p>
+                <div class="attribution">— Artist on r/learntodraw</div>
+            </div>
+            <div class="quote-card">
+                <p>"I really struggle with how to structure a study. Get overwhelmed and then get nowhere."</p>
+                <div class="attribution">— Artist on r/learnart</div>
+            </div>
+            <div class="quote-card">
+                <p>"I've been wanting to improve my art by learning, and all the videos recommend learning the fundamentals, but I'm stuck on the how? I feel like I'm drawing shapes with no direction."</p>
+                <div class="attribution">— Artist on r/learntodraw</div>
+            </div>
+            <div class="quote-card">
+                <p>"Everything he teaches can be learned for free elsewhere, the benefit of the course is that all that information is gathered in one place and structured for easy learning."</p>
+                <div class="attribution">— Artist on r/learnart</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="signup">
+    <div class="container">
+        <h2>Your clear path starts here</h2>
+        <p class="subtext">Sign up for early access. Tell us what's been hardest — your answer helps us build this for you.</p>
+        <!-- TODO: Replace action="" with Mailchimp/Buttondown endpoint -->
+        <form class="signup-form" action="" method="POST">
+            <div class="email-row">
+                <input type="email" name="email" placeholder="your@email.com" required>
+                <button type="submit">Get Early Access</button>
+            </div>
+            <div class="survey-field">
+                <!-- TODO: Consider using Typeform embed for richer survey data -->
+                <label for="hardest">What's been the hardest part of learning to draw?</label>
+                <textarea id="hardest" name="hardest_part" placeholder="e.g., I never know what to practice next, or I keep starting over..."></textarea>
+            </div>
+        </form>
+        <p class="privacy-note">No spam. Your answer helps us build the right thing.</p>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        &copy; 2026 DrawPath. One clear path from here to there.
+    </div>
+</footer>
+
+</body>
+</html>

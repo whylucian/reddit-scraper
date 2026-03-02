@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Something Looks Off But You Can't Tell What</title>
+    <meta name="description" content="You stare at your drawing. You know it's wrong. You just can't see why. 2,000+ artists posted this exact frustration last year. There's a reason — and a solution.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --dark-bg: #0a0a0f;
+            --dark-surface: #141420;
+            --dark-surface-2: #1c1c2e;
+            --dark-border: #2a2a3a;
+            --purple-400: #a78bfa;
+            --purple-500: #8b5cf6;
+            --purple-600: #7c3aed;
+            --purple-900: #2e1065;
+            --blue-400: #60a5fa;
+            --blue-500: #3b82f6;
+            --teal-400: #2dd4bf;
+            --green-400: #4ade80;
+            --gray-300: #d1d5db;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --white: #ffffff;
+            --white-95: rgba(255,255,255,0.95);
+            --white-80: rgba(255,255,255,0.8);
+            --white-60: rgba(255,255,255,0.6);
+            --white-40: rgba(255,255,255,0.4);
+            --white-20: rgba(255,255,255,0.2);
+            --white-10: rgba(255,255,255,0.1);
+            --light-bg: #f8f9fc;
+            --light-surface: #ffffff;
+            --light-text: #1f2937;
+            --light-text-secondary: #4b5563;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--white-80);
+            line-height: 1.6;
+            background: var(--dark-bg);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── NAV ── */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--dark-border);
+            background: var(--dark-bg);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--purple-400);
+        }
+        .nav-cta {
+            background: var(--purple-500);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .nav-cta:hover { background: var(--purple-600); }
+
+        /* ── HERO (DARK / MOODY) ── */
+        .hero {
+            padding: 100px 0 80px;
+            text-align: center;
+            background: var(--dark-bg);
+        }
+        .hero h1 {
+            font-size: clamp(2rem, 5vw, 3.2rem);
+            font-weight: 800;
+            color: var(--white-95);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .hero .subhead {
+            font-size: clamp(1.05rem, 2.5vw, 1.2rem);
+            color: var(--white-60);
+            max-width: 520px;
+            margin: 0 auto 48px;
+        }
+
+        /* Before/after placeholder */
+        .ba-placeholder {
+            max-width: 640px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+        .ba-card {
+            aspect-ratio: 4 / 5;
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            gap: 12px;
+            text-align: center;
+        }
+        .ba-card.before {
+            background: var(--dark-surface);
+            border: 2px dashed var(--dark-border);
+        }
+        .ba-card.after {
+            background: var(--dark-surface-2);
+            border: 2px solid var(--purple-500);
+        }
+        .ba-card .ba-label {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+        .ba-card.before .ba-label { color: var(--white-40); }
+        .ba-card.after .ba-label { color: var(--purple-400); }
+        .ba-card .ba-icon { font-size: 2.5rem; opacity: 0.4; }
+        .ba-card .ba-desc {
+            font-size: 0.85rem;
+            color: var(--white-40);
+        }
+        .ba-card.after .ba-desc { color: var(--white-60); }
+
+        /* ── YOU'RE NOT ALONE (DARK) ── */
+        .not-alone {
+            padding: 80px 0;
+            background: var(--dark-surface);
+        }
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 12px;
+        }
+        .section-title-dark {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--white-95);
+            margin-bottom: 16px;
+        }
+        .stat-callout {
+            font-size: 1.1rem;
+            color: var(--white-60);
+            margin-bottom: 48px;
+            max-width: 560px;
+        }
+        .stat-callout strong {
+            color: var(--purple-400);
+            font-weight: 700;
+        }
+        .speech-bubbles {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+        }
+        .speech-bubble {
+            background: var(--dark-surface-2);
+            border: 1px solid var(--dark-border);
+            border-radius: 16px;
+            padding: 24px;
+            position: relative;
+            font-style: italic;
+            color: var(--white-60);
+            font-size: 0.95rem;
+        }
+        .speech-bubble::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 32px;
+            width: 16px;
+            height: 16px;
+            background: var(--dark-surface-2);
+            border-right: 1px solid var(--dark-border);
+            border-bottom: 1px solid var(--dark-border);
+            transform: rotate(45deg);
+        }
+        .speech-bubble .attribution {
+            margin-top: 10px;
+            font-size: 0.78rem;
+            color: var(--white-40);
+            font-style: normal;
+        }
+
+        /* ── THE GAP (TRANSITION SECTION) ── */
+        .the-gap {
+            padding: 80px 0;
+            background: linear-gradient(180deg, var(--dark-bg) 0%, #1a1a2e 50%, #2d2d4a 100%);
+            text-align: center;
+        }
+        .gap-content {
+            max-width: 640px;
+            margin: 0 auto;
+        }
+        .gap-content h2 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--white-95);
+            margin-bottom: 24px;
+        }
+        .gap-content p {
+            font-size: 1.1rem;
+            color: var(--white-60);
+            margin-bottom: 16px;
+        }
+        .gap-content .reframe {
+            display: inline-block;
+            margin-top: 16px;
+            padding: 16px 28px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            border-radius: 12px;
+            color: var(--purple-400);
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        /* ── THE SOLUTION (LIGHTER) ── */
+        .solution {
+            padding: 80px 0;
+            background: linear-gradient(180deg, #2d2d4a 0%, var(--light-bg) 40%);
+            color: var(--light-text);
+        }
+        .solution .section-label { color: var(--purple-500); }
+        .solution h2 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--light-text);
+            margin-bottom: 20px;
+        }
+        .solution p {
+            font-size: 1.05rem;
+            color: var(--light-text-secondary);
+            max-width: 560px;
+            margin-bottom: 40px;
+        }
+        .solution-mockup {
+            max-width: 560px;
+            background: var(--light-surface);
+            border: 2px dashed #d1d5db;
+            border-radius: 16px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+            color: var(--light-text-secondary);
+        }
+        .solution-mockup .icon { font-size: 2.5rem; opacity: 0.5; }
+        .solution-mockup .desc { font-size: 0.9rem; text-align: center; }
+        .solution-mockup .tech-note {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            font-style: italic;
+        }
+
+        /* ── FRUSTRATION POLL (LIGHT) ── */
+        .poll-section {
+            padding: 80px 0;
+            background: var(--light-bg);
+            text-align: center;
+        }
+        .poll-section .section-label { color: var(--purple-500); }
+        .poll-section h2 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            font-weight: 700;
+            color: var(--light-text);
+            margin-bottom: 36px;
+        }
+        .poll-options {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            max-width: 680px;
+            margin: 0 auto 48px;
+        }
+        .poll-option {
+            position: relative;
+        }
+        .poll-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        .poll-option label {
+            display: block;
+            padding: 20px 16px;
+            background: var(--light-surface);
+            border: 2px solid #e5e7eb;
+            border-radius: 14px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            color: var(--light-text);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .poll-option input[type="radio"]:checked + label {
+            border-color: var(--purple-500);
+            background: rgba(139, 92, 246, 0.06);
+            color: var(--purple-600);
+        }
+        .poll-option label:hover {
+            border-color: var(--gray-400);
+        }
+        .poll-option .poll-emoji {
+            display: block;
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        /* ── CTA (LIGHT) ── */
+        .cta-section {
+            padding: 0 0 80px;
+            text-align: center;
+            background: var(--light-bg);
+        }
+        .cta-section h2 {
+            font-size: clamp(1.4rem, 3vw, 1.8rem);
+            font-weight: 700;
+            color: var(--light-text);
+            margin-bottom: 12px;
+        }
+        .cta-section .subtext {
+            color: var(--light-text-secondary);
+            margin-bottom: 32px;
+            font-size: 1rem;
+        }
+        .signup-form {
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .signup-form input[type="email"] {
+            flex: 1;
+            min-width: 240px;
+            padding: 14px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+            background: var(--light-surface);
+            color: var(--light-text);
+        }
+        .signup-form input[type="email"]:focus {
+            border-color: var(--purple-500);
+        }
+        .signup-form button {
+            padding: 14px 28px;
+            background: var(--purple-500);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .signup-form button:hover { background: var(--purple-600); }
+        .privacy-note {
+            margin-top: 16px;
+            font-size: 0.82rem;
+            color: var(--gray-400);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 32px 0;
+            border-top: 1px solid #e5e7eb;
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--gray-400);
+            background: var(--light-bg);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .hero { padding: 56px 0 48px; }
+            .ba-placeholder { grid-template-columns: 1fr; }
+            .not-alone, .the-gap, .solution, .poll-section { padding: 56px 0; }
+            .speech-bubbles { grid-template-columns: 1fr; }
+            .poll-options { grid-template-columns: 1fr 1fr; }
+            .signup-form { flex-direction: column; align-items: stretch; }
+            .signup-form input[type="email"] { min-width: auto; }
+        }
+
+        @media (max-width: 420px) {
+            .poll-options { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+    <div class="container">
+        <div class="logo">DrawSee</div>
+        <a href="#signup" class="nav-cta">Get Early Access</a>
+    </div>
+</nav>
+
+<!-- Hero (Dark, moody) -->
+<section class="hero">
+    <div class="container">
+        <h1>Something Looks Off.<br>But You Can't Tell What.</h1>
+        <p class="subhead">You stare at your drawing. You know it's wrong. You just can't see why.</p>
+
+        <div class="ba-placeholder">
+            <div class="ba-card before">
+                <div class="ba-label">Before</div>
+                <div class="ba-icon">&#9999;&#65039;</div>
+                <p class="ba-desc">A drawing with subtle errors — proportions off, eyes uneven, perspective slightly wrong</p>
+            </div>
+            <div class="ba-card after">
+                <div class="ba-label">After Diagnosis</div>
+                <div class="ba-icon">&#128301;</div>
+                <p class="ba-desc">Same drawing with annotations: proportion guides, alignment lines, specific callouts on what to fix</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- You're Not Alone -->
+<section class="not-alone">
+    <div class="container">
+        <p class="section-label" style="color: var(--purple-400);">You're Not Alone</p>
+        <h2 class="section-title-dark">This frustration is universal</h2>
+        <p class="stat-callout"><strong>2,000+ artists</strong> posted this exact frustration online last year. Here's what they said:</p>
+        <div class="speech-bubbles">
+            <div class="speech-bubble">
+                <p>"Something feels off... I measured the proportions and I feel like they are correct. What is off about it?"</p>
+                <div class="attribution">— r/learntodraw</div>
+            </div>
+            <div class="speech-bubble">
+                <p>"I've been looking at this image for a long while and my view isn't changing anything. Something about it is annoying me and I don't know what exactly."</p>
+                <div class="attribution">— r/ArtCrit</div>
+            </div>
+            <div class="speech-bubble">
+                <p>"I feel like I'm not improving. I've done like a hundred of these and I just can't seem to 'get it'."</p>
+                <div class="attribution">— r/learnart</div>
+            </div>
+            <div class="speech-bubble">
+                <p>"I can't really tell what's wrong. Help, please!"</p>
+                <div class="attribution">— r/learntodraw</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- The Gap -->
+<section class="the-gap">
+    <div class="container">
+        <div class="gap-content">
+            <p class="section-label" style="color: var(--purple-400);">The Diagnostic Gap</p>
+            <h2>Your eye develops faster than your skill</h2>
+            <p>You can detect errors before you can diagnose them. You look at your drawing and something feels wrong — but you can't name it. Can't fix it. Can't learn from it.</p>
+            <p>This isn't failure. This is actually a sign of progress.</p>
+            <div class="reframe">Your taste has outgrown your ability. That means you're learning.</div>
+        </div>
+    </div>
+</section>
+
+<!-- The Solution (transitions to lighter) -->
+<section class="solution">
+    <div class="container">
+        <p class="section-label">The Solution</p>
+        <h2>An AI that sees what you can't</h2>
+        <p>Upload your drawing. Get instant, specific feedback on proportions, anatomy, perspective — whatever's off. Close the gap between what your eye detects and what your hand can fix.</p>
+
+        <div class="solution-mockup">
+            <div class="icon">&#128301;</div>
+            <p class="desc">Mockup: diagnostic feedback view — a drawing with annotated proportion guides, arrows pointing to specific issues, severity indicators, and suggested exercises</p>
+            <p class="tech-note">TODO: Replace with generated diagnostic mockup image</p>
+        </div>
+    </div>
+</section>
+
+<!-- Frustration Poll -->
+<section class="poll-section">
+    <div class="container">
+        <p class="section-label">Quick Question</p>
+        <h2>What frustrates you most about your drawings?</h2>
+        <!-- TODO: Hook up poll responses to Typeform, Google Sheets, or a simple form backend -->
+        <form action="" method="POST">
+            <div class="poll-options">
+                <div class="poll-option">
+                    <input type="radio" id="poll-proportions" name="frustration" value="proportions">
+                    <label for="poll-proportions">
+                        <span class="poll-emoji">&#128207;</span>
+                        Proportions
+                    </label>
+                </div>
+                <div class="poll-option">
+                    <input type="radio" id="poll-shading" name="frustration" value="shading">
+                    <label for="poll-shading">
+                        <span class="poll-emoji">&#127763;</span>
+                        Shading
+                    </label>
+                </div>
+                <div class="poll-option">
+                    <input type="radio" id="poll-perspective" name="frustration" value="perspective">
+                    <label for="poll-perspective">
+                        <span class="poll-emoji">&#128194;</span>
+                        Perspective
+                    </label>
+                </div>
+                <div class="poll-option">
+                    <input type="radio" id="poll-anatomy" name="frustration" value="anatomy">
+                    <label for="poll-anatomy">
+                        <span class="poll-emoji">&#129516;</span>
+                        Anatomy
+                    </label>
+                </div>
+                <div class="poll-option">
+                    <input type="radio" id="poll-dunno" name="frustration" value="dont-know">
+                    <label for="poll-dunno">
+                        <span class="poll-emoji">&#129300;</span>
+                        I don't even know what's wrong
+                    </label>
+                </div>
+            </div>
+
+            <!-- CTA follows the poll -->
+            <section class="cta-section" id="signup" style="padding-top:0;">
+                <h2>We're building the fix. Want in?</h2>
+                <p class="subtext">Be the first to try it. No spam, just one email when it's ready.</p>
+                <div class="signup-form">
+                    <input type="email" name="email" placeholder="your@email.com" required>
+                    <button type="submit">Get Early Access</button>
+                </div>
+                <p class="privacy-note">No spam. Unsubscribe anytime.</p>
+            </section>
+        </form>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        &copy; 2026 DrawSee. See what you've been missing.
+    </div>
+</footer>
+
+</body>
+</html>

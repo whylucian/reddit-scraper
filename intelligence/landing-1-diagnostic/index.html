@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's Wrong With My Drawing? — Instant AI Feedback</title>
+    <meta name="description" content="Upload your drawing. Get instant, specific feedback on exactly what's off and how to fix it. No more guessing.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --blue-50: #eff6ff;
+            --blue-100: #dbeafe;
+            --blue-500: #3b82f6;
+            --blue-600: #2563eb;
+            --blue-700: #1d4ed8;
+            --blue-900: #1e3a5f;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-400: #9ca3af;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --white: #ffffff;
+            --red-500: #ef4444;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            color: var(--gray-800);
+            line-height: 1.6;
+            background: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1080px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* ── NAV ── */
+        nav {
+            padding: 20px 0;
+            border-bottom: 1px solid var(--gray-200);
+        }
+        nav .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--blue-600);
+        }
+        .nav-cta {
+            background: var(--blue-600);
+            color: var(--white);
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s;
+        }
+        .nav-cta:hover { background: var(--blue-700); }
+
+        /* ── HERO ── */
+        .hero {
+            padding: 80px 0 60px;
+            text-align: center;
+        }
+        .hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            color: var(--gray-900);
+            line-height: 1.15;
+            margin-bottom: 20px;
+        }
+        .hero .subhead {
+            font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        /* Mockup placeholder */
+        .mockup-placeholder {
+            max-width: 640px;
+            margin: 0 auto;
+            aspect-ratio: 16 / 10;
+            background: var(--gray-50);
+            border: 2px dashed var(--gray-300, #d1d5db);
+            border-radius: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 32px;
+            gap: 12px;
+            color: var(--gray-500);
+        }
+        .mockup-placeholder .icon {
+            font-size: 3rem;
+            line-height: 1;
+            opacity: 0.5;
+        }
+        .mockup-placeholder .desc {
+            font-size: 0.95rem;
+            text-align: center;
+            max-width: 400px;
+        }
+        .mockup-placeholder .tech-note {
+            font-size: 0.8rem;
+            color: var(--gray-400);
+            font-style: italic;
+        }
+
+        /* ── PROBLEM ── */
+        .problem {
+            padding: 80px 0;
+            background: var(--gray-50);
+        }
+        .section-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            color: var(--blue-600);
+            margin-bottom: 12px;
+        }
+        .section-title {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 48px;
+        }
+        .pain-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 32px;
+        }
+        .pain-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 32px;
+            border: 1px solid var(--gray-200);
+        }
+        .pain-card .pain-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 16px;
+        }
+        .pain-card:nth-child(1) .pain-icon { background: #fef2f2; }
+        .pain-card:nth-child(2) .pain-icon { background: #fefce8; }
+        .pain-card:nth-child(3) .pain-icon { background: #f0fdf4; }
+        .pain-card h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+        .pain-card p {
+            font-size: 0.95rem;
+            color: var(--gray-600);
+        }
+
+        /* ── HOW IT WORKS ── */
+        .how-it-works {
+            padding: 80px 0;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 40px;
+            position: relative;
+        }
+        .step {
+            text-align: center;
+            position: relative;
+        }
+        .step-number {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: var(--blue-600);
+            color: var(--white);
+            font-weight: 700;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+        .step h3 {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 8px;
+        }
+        .step p {
+            font-size: 0.95rem;
+            color: var(--gray-600);
+            max-width: 300px;
+            margin: 0 auto;
+        }
+
+        /* connector arrows between steps (desktop) */
+        @media (min-width: 768px) {
+            .step:not(:last-child)::after {
+                content: "\2192";
+                position: absolute;
+                right: -28px;
+                top: 16px;
+                font-size: 1.5rem;
+                color: var(--gray-400);
+            }
+        }
+
+        /* ── SOCIAL PROOF ── */
+        .social-proof {
+            padding: 80px 0;
+            background: var(--blue-50);
+        }
+        .quotes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 24px;
+            margin-top: 48px;
+        }
+        .quote-card {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 28px;
+            border: 1px solid var(--blue-100);
+            position: relative;
+        }
+        .quote-card::before {
+            content: "\201C";
+            font-size: 3rem;
+            color: var(--blue-500);
+            line-height: 1;
+            position: absolute;
+            top: 16px;
+            left: 20px;
+            opacity: 0.3;
+        }
+        .quote-card p {
+            font-size: 0.95rem;
+            color: var(--gray-700);
+            font-style: italic;
+            padding-top: 16px;
+        }
+        .quote-card .attribution {
+            margin-top: 12px;
+            font-size: 0.82rem;
+            color: var(--gray-400);
+            font-style: normal;
+        }
+
+        /* ── CTA ── */
+        .cta-section {
+            padding: 80px 0;
+            text-align: center;
+        }
+        .cta-section h2 {
+            font-size: clamp(1.6rem, 3.5vw, 2.2rem);
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 12px;
+        }
+        .cta-section .subtext {
+            color: var(--gray-600);
+            margin-bottom: 32px;
+            font-size: 1.05rem;
+        }
+        .signup-form {
+            display: flex;
+            gap: 12px;
+            max-width: 480px;
+            margin: 0 auto;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .signup-form input[type="email"] {
+            flex: 1;
+            min-width: 240px;
+            padding: 14px 18px;
+            border: 2px solid var(--gray-200);
+            border-radius: 10px;
+            font-size: 1rem;
+            font-family: inherit;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        .signup-form input[type="email"]:focus {
+            border-color: var(--blue-500);
+        }
+        .signup-form button {
+            padding: 14px 28px;
+            background: var(--blue-600);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 1rem;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: background 0.2s;
+            white-space: nowrap;
+        }
+        .signup-form button:hover { background: var(--blue-700); }
+        .privacy-note {
+            margin-top: 16px;
+            font-size: 0.82rem;
+            color: var(--gray-400);
+        }
+
+        /* ── FOOTER ── */
+        footer {
+            padding: 32px 0;
+            border-top: 1px solid var(--gray-200);
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--gray-400);
+        }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            .hero { padding: 48px 0 40px; }
+            .problem, .how-it-works, .social-proof, .cta-section { padding: 56px 0; }
+            .pain-grid, .steps, .quotes-grid { grid-template-columns: 1fr; }
+            .signup-form { flex-direction: column; align-items: stretch; }
+            .signup-form input[type="email"] { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Nav -->
+<nav>
+    <div class="container">
+        <div class="logo">DrawDiagnose</div>
+        <a href="#signup" class="nav-cta">Get Early Access</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+    <div class="container">
+        <h1>What's Wrong With My Drawing?</h1>
+        <p class="subhead">Upload your drawing. Get instant, specific feedback on exactly what's off — proportions, anatomy, perspective — and know what to practice next.</p>
+
+        <div class="mockup-placeholder">
+            <div class="icon">&#128221;</div>
+            <p class="desc">Annotated drawing mockup: a beginner portrait with diagnostic overlay — proportion lines, arrows, callouts like "Left eye 15% too high relative to nose bridge"</p>
+            <p class="tech-note">TODO: Replace with generated mockup image</p>
+        </div>
+    </div>
+</section>
+
+<!-- The Problem -->
+<section class="problem">
+    <div class="container">
+        <p class="section-label">The Problem</p>
+        <h2 class="section-title">You know something's wrong. You just can't see what.</h2>
+        <div class="pain-grid">
+            <div class="pain-card">
+                <div class="pain-icon">&#128064;</div>
+                <h3>"Something looks off..."</h3>
+                <p>You stare at your drawing. You know it's wrong. Over 2,000 artists posted this exact frustration online last year. Your eye develops faster than your skill — you can <em>detect</em> errors before you can <em>diagnose</em> them.</p>
+            </div>
+            <div class="pain-card">
+                <div class="pain-icon">&#9203;</div>
+                <h3>Reddit takes days</h3>
+                <p>Post your work, wait hours or days, maybe get a vague reply. "Looks good!" doesn't help. The feedback loop is broken — you need answers while the drawing is still fresh in your mind.</p>
+            </div>
+            <div class="pain-card">
+                <div class="pain-icon">&#128176;</div>
+                <h3>Teachers cost $50+/hr</h3>
+                <p>A private art teacher gives you exactly what you need: specific markup on <em>your</em> drawing. But at $50–200/hr, most beginners can't afford regular feedback. You shouldn't have to choose between guessing and going broke.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- How It Works -->
+<section class="how-it-works">
+    <div class="container">
+        <p class="section-label" style="text-align:center;">How It Works</p>
+        <h2 class="section-title" style="text-align:center;">From confused to clear in 30 seconds</h2>
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Upload your drawing</h3>
+                <p>Snap a photo or upload a scan. Any medium, any skill level.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Get specific markup</h3>
+                <p>AI analyzes proportions, anatomy, perspective, and shading — and marks exactly what's off and why.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Know what to practice</h3>
+                <p>Every diagnosis comes with targeted exercises. Stop guessing what to work on.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Social Proof -->
+<section class="social-proof">
+    <div class="container">
+        <p class="section-label" style="text-align:center;">You're Not Alone</p>
+        <h2 class="section-title" style="text-align:center;">This is what artists say every day</h2>
+        <div class="quotes-grid">
+            <div class="quote-card">
+                <p>"Something feels off... I measured the proportions and I feel like they are correct. What is off about it?"</p>
+                <div class="attribution">— Artist on r/learntodraw</div>
+            </div>
+            <div class="quote-card">
+                <p>"I've been looking at this image for a long while and my view isn't changing anything. Something about it is annoying me and I don't know what exactly."</p>
+                <div class="attribution">— Artist on r/ArtCrit</div>
+            </div>
+            <div class="quote-card">
+                <p>"I have tried flipping a few times, and I could spot that something was off, but it's hard to tell what."</p>
+                <div class="attribution">— Artist on r/learnart</div>
+            </div>
+            <div class="quote-card">
+                <p>"I'm just so frustrated and would like to get some kind of direction before I continue."</p>
+                <div class="attribution">— Artist on r/learntodraw</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="signup">
+    <div class="container">
+        <h2>Stop guessing. Start knowing.</h2>
+        <p class="subtext">Be first in line when we launch. Get instant feedback on every drawing.</p>
+        <!-- TODO: Replace action="" with Mailchimp/Buttondown endpoint -->
+        <form class="signup-form" action="" method="POST">
+            <input type="email" name="email" placeholder="your@email.com" required>
+            <button type="submit">Get Early Access</button>
+        </form>
+        <p class="privacy-note">No spam. Unsubscribe anytime. We'll email you once when it's ready.</p>
+    </div>
+</section>
+
+<footer>
+    <div class="container">
+        &copy; 2026 DrawDiagnose. Built by artists, for artists.
+    </div>
+</footer>
+
+</body>
+</html>
