@@ -92,6 +92,31 @@ Uses existing Claude quota on curated subsets.
 
 ---
 
+## Status & Results
+
+### Pass 2 complete → `high_signal_threads.md`
+
+160 threads analyzed (top 40 per subreddit by score × comment count). Key findings:
+- Top 3 struggles: proportions/anatomy (63), values/contrast (55), motivation/burnout (48)
+- 60-70% of Reddit feedback is non-actionable praise; only ~15% is specific technical critique
+- 87 willingness-to-pay signals; users pay for feedback, not content
+- Top automatable opportunities: value range analysis, proportion overlay, reference comparison, light source checker
+- Patterns stabilized by batch 4 of 8 — diminishing returns on more threads from the same subreddits
+
+### Recommended next steps (instead of more pass 2)
+
+More threads from the same 4 subreddits would yield the same patterns. Better to go deeper or wider:
+
+1. **Targeted WTP deep-dive** — Grep for willingness-to-pay phrases ("I'd pay", "worth it", "take my money", "shut up and take", "commission") across all 186k posts and analyze just those matches. The 87 WTP signals from pass 2 are the most commercially valuable data; a targeted pass would 10x this.
+
+2. **ArtProgressPics analysis** — Different subreddit, different signal. Pull high-engagement threads from r/ArtProgressPics to understand what improvement actually looks like over time: how long does progress take, what changed, what practice methods worked. This feeds directly into the app's progress tracking and motivation features.
+
+3. **Move to pass 3 (bulk Qwen classification)** — The pass 2 findings give us validated categories and extraction schema. Running all 186k posts through Qwen would give actual population-level counts rather than extrapolating from 160 threads.
+
+4. **Pass 1 grep mining for resource/product mentions** — Long tail of product mentions across the full corpus. Pass 2 found the top resources (Drawabox, Proko, Loomis, Procreate) but a full grep pass would surface niche tools, courses, and spending patterns we missed.
+
+---
+
 ## Execution order
 
 1 → 2 → 3 → 4. Each pass builds on the previous — grep findings inform the Qwen extraction prompt, Claude deep-dives validate what the bulk pass finds, image analysis adds a dimension text can't capture.
